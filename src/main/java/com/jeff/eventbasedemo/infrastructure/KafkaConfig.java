@@ -23,4 +23,12 @@ public class KafkaConfig {
                 .replicas(1)   // Adjust as needed for production
                 .build();
     }
+
+    @Bean
+    public NewTopic ordersTopic() {
+        return TopicBuilder.name("orders")
+                .partitions(3) // Ajusta según necesidad
+                .replicas(1)   // Ajusta según necesidad
+                .build();
+    }
 }

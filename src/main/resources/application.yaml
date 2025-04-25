@@ -31,3 +31,4 @@ kafka:
   topic:
     notification: waiter-notifications
     request: waiter-requests # Define your topic name
+    orders: orders

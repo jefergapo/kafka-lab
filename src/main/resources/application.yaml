@@ -1,0 +1,33 @@
+# src/main/resources/application.yml
+server:
+  port: 8080 # Or any port you prefer
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web.reactive.socket: DEBUG
+    org.springframework.web.reactive.handler: DEBUG
+    org.springframework.web: DEBUG
+    com.jeff.eventbasedemo: DEBUG # Reemplaza con el paquete de tu WebSocketHandler
+
+spring:
+  application:
+    name: waiter-service
+  kafka:
+    bootstrap-servers: localhost:9092 # Replace with your Kafka broker address(es)
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer # Use JSON for message body
+    consumer:
+      group-id: waiter-group # Consumer group ID
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*" # Trust all packages for deserialization (adjust for production)
+        spring.json.value.default.type: com.jeff.eventbasedemo.domain.model.WaiterRequest # Specify the default type for deserialization
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topic:
+    notification: waiter-notifications
+    request: waiter-requests # Define your topic name
